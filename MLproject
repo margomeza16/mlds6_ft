@@ -1,7 +1,7 @@
 name: "modft"
 
-docker_env:
-    image: "mlds6ft"
+#docker_env:
+#    image: "mlds6ft"
 
 entry_points:
     train:
