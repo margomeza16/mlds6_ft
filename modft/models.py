@@ -1,6 +1,6 @@
 from numpy.typing import ArrayLike
 from tensorflow import Tensor
-from mldsft.data import DataLoader
+from modft.data import DataLoader
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Flatten, Dense, Dropout
 from tensorflow.keras.optimizers import Adam
