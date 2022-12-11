@@ -1,7 +1,7 @@
 import mlflow
 from modft.models import ModelBuilder, CompileHParams, TrainHParams
-from mldsft.data import DataLoader
-from mldsft.viz import Visualizer
+from modft.data import DataLoader
+from modft.viz import Visualizer
 from argparse import ArgumentParser
 
 def make_parser() -> ArgumentParser:
