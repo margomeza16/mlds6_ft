@@ -1,0 +1,13 @@
+name: "digits"
+
+docker_env:
+    image: "mlds6ft"
+
+entry_points:
+    train:
+        parameters:
+            dropout: {type: float, default: 0.5}
+            learning_rate: {type: float, default: 0.01}
+            epochs: {type: int, default: 10}
+            batch_size: {type: int, default: 128}
+        command: "python scripts/train.py --dropout {dropout} --learning_rate {learning_rate} --epochs {epochs} --batch_size {batch_size}"
