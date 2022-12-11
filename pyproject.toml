@@ -3,8 +3,6 @@ name = "mldsft"
 version = "0.1.0"
 description = "Modelo Fine Tunning con ResNet50V2"
 authors = ["Marco Julio Gómez <margomeza16@gmail.com>"]
-readme = "README.md"
-packages = [{include = "mlds6_ft"}]
 
 [tool.poetry.dependencies]
 python = ">=3.10,<3.11"
