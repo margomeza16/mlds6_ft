@@ -1,4 +1,4 @@
-name: "digits"
+name: "mldsft"
 
 docker_env:
     image: "mlds6ft"
