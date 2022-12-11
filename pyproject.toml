@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "mldsft"
+name = "modft"
 version = "0.1.0"
 description = "Modelo Fine Tunning con ResNet50V2"
 authors = ["Marco Julio Gómez <margomeza16@gmail.com>"]

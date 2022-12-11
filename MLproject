@@ -1,4 +1,4 @@
-name: "mldsft"
+name: "modft"
 
 docker_env:
     image: "mlds6ft"
