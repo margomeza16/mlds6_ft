@@ -5,9 +5,9 @@ import tensorflow as tf
 #from tensorflow.keras.datasets import mnist
 from tensorflow.keras.utils import to_categorical
 
-zip_train = '/content/drive/MyDrive/MachineLearningAvanzado/train.zip'
-zip_test = '/content/drive/MyDrive/MachineLearningAvanzado/test.zip'
-zip_val = '/content/drive/MyDrive/MachineLearningAvanzado/val.zip'
+orig_zip_train = '/content/drive/MyDrive/MachineLearningAvanzado/train.zip'
+orig_zip_test = '/content/drive/MyDrive/MachineLearningAvanzado/test.zip'
+orig_zip_val = '/content/drive/MyDrive/MachineLearningAvanzado/val.zip'
 ruta_dest_train = '/tmp/train/'
 ruta_dest_test = '/tmp/test/'
 ruta_dest_val = '/tmp/val/'
@@ -45,11 +45,11 @@ class DataLoader:
           return X_val, y_val
 
     def __call__(self):
-	load_file(ruta_orig_zip_train, ruta_dest_train)
+	load_file(orig_zip_train, ruta_dest_train)
 	X_train, y_train = preproceso(ruta_dest_train)
-        load_file(ruta_orig_zip_test, ruta_dest_test)
+        load_file(orig_zip_test, ruta_dest_test)
         X_test, y_test = preproceso(ruta_dest_test)
-        load_file(ruta_orig_zip_val, ruta_dest_val)
+        load_file(orig_zip_val, ruta_dest_val)
         X_val, y_val = preproceso(ruta_dest_val)
 
         #Codificamos las etiquetas usando one-hot representation
@@ -78,13 +78,4 @@ class DataLoader:
 
         return train_gen, X_train_prep, X_val_prep, X_test_prep, Y_train,Y_test, Y_val
 
-# class DataLoaderAug:
-#     def __init__(self):
-#         self.loader = mnist.load_data
-#
-#     def __next__(self):
-#         (X_train, y_train), (X_test, y_test) = self.loader()
-#         ... # dataaug
-#         Y_train = to_categorical(y_train)
-#         Y_test = to_categorical(y_test)
-#         return X_train, Y_train, X_test, Y_test
+
