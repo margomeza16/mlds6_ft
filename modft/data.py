@@ -21,7 +21,7 @@ class DataLoader:
     	zip.extractall(destino)
 	return 0
 
-   def preproceso(dest):
+   def preproceso(ruta_dest):
        all_images = []
        labels = []
        for i, val in enumerate(["0_normal/", "1_ulcerative_colitis/", "2_polyps/", "3_esophagitis/"]):
