@@ -18,7 +18,8 @@ def main() -> int:
     compile_hparams = CompileHParams(
             dropout=args.dropout,
             learning_rate=args.learning_rate,
-            input_size=(None, 784)
+            input_size=(224,224,3)
+#            input_size=(None, 784)
             )
     train_hparams = TrainHParams(
             epochs=args.epochs,

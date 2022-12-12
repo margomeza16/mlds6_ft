@@ -1,30 +1,34 @@
 from numpy.typing import ArrayLike
 from tensorflow import Tensor
+from tensorflow.keras import layers 
 from modft.data import DataLoader
 from tensorflow.keras.models import Model
-from tensorflow.keras.layers import Flatten, Dense, Dropout
+from tensorflow.keras.layers import Flatten, Dense, Dropout, GlobalAveragePooling2D
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.metrics import CategoricalAccuracy
-#from tensorflow.keras.applications import InceptionV3
+from tensorflow.keras.applications import ResNet50V2
 from dataclasses import dataclass
 from typing import Tuple
 
 class MLP(Model):
     def __init__(self, dropout: float, *args, **kwargs):
         super(MLP, self).__init__(*args, **kwargs)
-        #self.feature_extractor = InceptionV3(include_top=False)
-        self.flat = Flatten()
-        self.den1 = Dense(256, activation="relu")
+        self.feature_extractor = ResNet50V2(weights='imagenet',include_top=False,input_shape=(224, 224, 3))
+        for layer in self.feature_extractor.layers:
+	    layer.trainable=False
+        self.pool = GlobalAveragePooling2D()
+        self.den1 = Dense(32, activation="relu")
         self.drop1 = Dropout(dropout)
-        self.den2 = Dense(10, activation="softmax")
+        self.den2 = Dense(4, activation="softmax")
 
     def call(self, x: Tensor) -> Tensor:
-        #h = self.feature_extractor(x)
-        f = self.flat(x)
-        h1 = self.den1(f)
+        fe = self.feature_extractor.output
+        p = self.pool(fe)
+        h1 = self.den1(p)
         d1 = self.drop1(h1)
-        out = self.den2(d1)
-        return out
+        h2 = self.den2(d1)
+	tl_mod = tf.keras.models.Model(inputs=[self.feature_extractor.input], outputs=[h2])
+        return tl_mod
 
 @dataclass
 class CompileHParams:
@@ -62,10 +66,15 @@ class ModelBuilder:
         return self
 
     def train(self, dl: DataLoader) -> "ModelBuilder":
-        X_train, Y_train, X_test, Y_test = dl()
+#        X_train, Y_train, X_test, Y_test = dl()
+        train_gen, X_train_prep, X_val_prep, X_test_prep, Y_train,Y_test, Y_val = d1()
+        epochs = self.train_hparams.epochs
+        batch_size = self.train_hparams.batch_size
+        steps_per_epoch = X_train_prep.shape[0]//batch_size
         self.model.fit(
-                X_train, Y_train, epochs=self.train_hparams.epochs,
-                validation_data=(X_test, Y_test),
-                batch_size=self.train_hparams.batch_size
+                train_gen, epochs=epochs,
+                validation_data=(X_val_prep, Y_val),
+                batch_size=batch_size,
+          	steps_per_epoch=steps_per_epoch
                 )
         return self
