@@ -18,7 +18,8 @@ def make_parser() -> ArgumentParser:
 
 def main() -> int:
 """
-    Se utiliza mlflow para crear una nueva corrida de un experimento del  modelo, se compila, ejecuta, construye historia de entrenamiento del modelo
+     Se asignan los parametros de entreada de compilación y entrenamiento del modelo. 
+     Se utiliza mlflow para crear una nueva corrida de un experimento del  modelo, se compila, ejecuta, construye historia de entrenamiento del modelo
     y se regitran los parámetro de compilación y entrenamiento así como las métricas obtenidas por el experimento ejecutado.
 """
 
