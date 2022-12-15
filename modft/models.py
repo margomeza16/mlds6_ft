@@ -137,6 +137,4 @@ class ModelBuilder:
           	steps_per_epoch=steps_per_epoch
                 )
         return self
-"""
-    	Retorna el modelo entrenado.
-"""
+
