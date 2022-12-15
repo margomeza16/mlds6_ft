@@ -115,7 +115,17 @@ class ModelBuilder:
 
 
     def train(self, dl: DataLoader) -> "ModelBuilder":
-#        X_train, Y_train, X_test, Y_test = dl()
+"""
+        Retorna el modelo entrenado.
+
+	Parametros:
+        ----------
+        d1: Objeto data loder con las imagenes de cada conjunto (entrenamiento, prueba, validación y etiquetas de clase categorizadas)
+
+        Returns:
+	Objeto de clase ModelBuilder que corresponde a un modelo entrenado
+"""
+
         train_gen, X_train_prep, X_val_prep, X_test_prep, Y_train,Y_test, Y_val = d1()
         epochs = self.train_hparams.epochs
         batch_size = self.train_hparams.batch_size
