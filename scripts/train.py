@@ -11,8 +11,17 @@ def make_parser() -> ArgumentParser:
     parser.add_argument("--epochs", type=int)
     parser.add_argument("--batch_size", type=int)
     return parser
+"""
+    Función que recibe los parámetros de compilación y entrenamiento del modelo.
+"""
+
 
 def main() -> int:
+"""
+    Se utiliza mlflow para crear una nueva corrida de un experimento del  modelo, se compila, ejecuta, construye historia de entrenamiento del modelo
+    y se regitran los parámetro de compilación y entrenamiento así como las métricas obtenidas por el experimento ejecutado.
+"""
+
     parser = make_parser()
     args = parser.parse_args()
     compile_hparams = CompileHParams(

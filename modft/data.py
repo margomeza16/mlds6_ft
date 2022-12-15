@@ -12,16 +12,58 @@ ruta_dest_train = '/tmp/train/'
 ruta_dest_test = '/tmp/test/'
 ruta_dest_val = '/tmp/val/'
 class DataLoader:
+"""
+    Loader for zip files with endoscopies images.
+
+    Attributes
+    ----------
+        train_gen: Contiene las imágenes de etrenamiento obtenidas al aplicar data augmentation
+        X_train_prep: Arreglo numpy con las imagenes de entrenamiento obtenidas del archivo .zip cargado, prepocesadas cono resnet_v2.
+        X_val_prep: Arreglo numpy con las imagenes de validación preporcesadas con resnet_v2.
+        X_test_prep: Arreglo numpy con las imagenes de test preprocesadas con resnet_v2,
+        Y_train : Etiquetas de clases de las imagenes de entrenamiento codificadas con one-hot representation.
+        Y_test: Etiquetas de clases de las imagenes de test codificadas con one-hot representation.
+        Y_val: Etiquetas de clases de las imagenes de validación codificadas con one-hot representation.
+    
+    
+    """
+
+
     def __init__(self):
 #        self.loader = mnist.load_data
 
 
     def load_file(orig, dest):
- 	zip = zipfile.ZipFile(orig,'r')
+"""
+	Descomprime y descarga archivos zip con imagenes
+	
+	Attributes
+	----------
+	orig: ruta origen de archivo .zip con imagenes
+	dest: Ruta destino de descarga de los archivos con imagenes descomrpimidas
+"""
+	zip = zipfile.ZipFile(orig,'r')
     	zip.extractall(destino)
 	return 0
 
+
    def preproceso(ruta_dest):
+"""
+       Guarda en arreglos de numpy los conjuntos de imágenes de entrenamiento, validación y prueba
+
+       Atributes
+       ---------
+
+       ruta_dest: Ruta de los archivo de imágenes a convertir en erreglo de numpy
+
+       Returns
+       -------
+       X_train :  Arreglo numpy con el conjunto de imágenes de entrenamiento.
+       y_train :  Etiquetas de clasificación de las imágenes de entrenamiento.
+       X_test  :  Arreglo numpy con el conjunto de imágenes de test.
+       y_test  :  Etiquetas de clasificación de las imágenes de test.
+       X_val   :  Arreglo numpy con el conjunto de imágenes de validación.
+"""
        all_images = []
        labels = []
        for i, val in enumerate(["0_normal/", "1_ulcerative_colitis/", "2_polyps/", "3_esophagitis/"]):
@@ -45,6 +87,29 @@ class DataLoader:
           return X_val, y_val
 
     def __call__(self):
+"""
+	Realiza llamado a las funciones load_file() y preproceso() por cada conjunto de imagenes descargadas (train, test y validación)
+	Codifica las etiquetas de las clases usando one-hot representation.
+	Realiza preprocesamiento de la ResNet50V2 para transformar los conjuntos, escalando los pixeles de entrada entre -1 y 1.
+        Realiza transformaciones de las imagenes de entrenamiento mediante data augmentation
+
+
+	Params
+	------
+	---
+
+	Return
+	------
+	Retorna las propiedades del objeto DataLoader:
+	train_gen: Contiene las imágenes de etrenamiento obtenidas al aplicar data augmentation 
+	X_train_prep: Arreglo numpy con las imagenes de entrenamiento obtenidas del archivo .zip cargado, prepocesadas cono resnet_v2.
+	X_val_prep: Arreglo numpy con las imagenes de validación preporcesadas con resnet_v2. 
+	X_test_prep: Arreglo numpy con las imagenes de test preprocesadas con resnet_v2, 
+	Y_train : Etiquetas de clases de las imagenes de entrenamiento codificadas con one-hot representation.
+	Y_test: Etiquetas de clases de las imagenes de test codificadas con one-hot representation.
+	Y_val: Etiquetas de clases de las imagenes de validación codificadas con one-hot representation.
+
+"""
 	load_file(orig_zip_train, ruta_dest_train)
 	X_train, y_train = preproceso(ruta_dest_train)
         load_file(orig_zip_test, ruta_dest_test)

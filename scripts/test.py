@@ -2,8 +2,14 @@ from modft.data import DataLoader
 import mlflow
 
 def main() -> int:
-    _, _, X_test, _ = DataLoader()()
-train_gen,X_train_prep,X_val_prep,X_test_prep,Y_train,Y_test,Y_val = DataLoader()()
+    _,_,_,X_test_prep,_,_,_ = DataLoader()()
+"""
+   Función para realizar evaluación del modelo mediante la clasificación de una imagen del conjunto de test
+
+   Return
+   ------
+   y_pred: porcentaje de pertenencia a cada clase asignado por el modelo a la imagen recibida
+"""
     samples = X_test_prep[:2]
     name = "runs:/c8df84ac830d492685122538a67aa5bc/mlp"
     model = mlflow.pyfunc.load_model(name)
