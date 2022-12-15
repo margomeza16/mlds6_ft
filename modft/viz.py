@@ -2,6 +2,10 @@ from typing import Dict
 import matplotlib.pyplot as plt
 
 class Visualizer:
+"""
+	Clase para la visualización de perdida, accuracy y metricas del modelo entrenado.
+"""
+
     def __init__(self, history: Dict, path: str):
         self.history = history
         self.path = path
